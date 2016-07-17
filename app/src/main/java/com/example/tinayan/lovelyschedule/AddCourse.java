@@ -1,15 +1,39 @@
 package com.example.tinayan.lovelyschedule;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListAdapter;
+import android.widget.ListView;
+import android.widget.TextView;
+
+import com.example.tinayan.lovelyschedule.adapter.CourseSelectorAdapter;
+import com.example.tinayan.lovelyschedule.data_models.PersonalDataHolder;
+import com.example.tinayan.lovelyschedule.data_models.info_box_interface.ICourseInfo;
+
+import java.util.Calendar;
+import java.util.List;
 
 public class AddCourse extends AppCompatActivity {
+
+    private ListView courseList;
+
+    private String getCurrentTerm() {
+        Calendar currendDate = Calendar.getInstance();
+        String season;
+        if(currendDate.get(Calendar.MONTH) <= 4) {
+            season = " Winter";
+        } else if (currendDate.get(Calendar.MONTH) <= 8) {
+            season = " Spring";
+        } else {
+            season = " Fall";
+        }
+        return currendDate.get(Calendar.YEAR) + season + "Term";
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -18,14 +42,19 @@ public class AddCourse extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
+        TextView termName = (TextView) findViewById(R.id.TermName);
+        termName.setText(getCurrentTerm());
+
+        courseList = (ListView)findViewById(R.id.CourseList);
+
+        PersonalDataHolder CourseData = PersonalDataHolder.getInstance();
+
+        List<ICourseInfo> courseInfoList = CourseData.getCourseList();
+
+        ListAdapter currentCourses = new CourseSelectorAdapter(this,
+                R.layout.course_selector_fragment,
+                courseInfoList.toArray(new ICourseInfo[courseInfoList.size()]));
+        courseList.setAdapter(currentCourses);
     }
 
     @Override
@@ -43,10 +72,17 @@ public class AddCourse extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_exit) {
+            finish();
             return true;
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void onAddCourseClick(View view) {
+        Intent addCourseIntent = new Intent(this, SelectList.class);
+        finish();
+        startActivity(addCourseIntent);
     }
 }

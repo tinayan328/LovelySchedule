@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_margin="5dp"
+    tools:context=".AddCourse"
+    android:weightSum="1"
+    android:background="@color/colorLightGray"
+    android:id="@+id/Selector">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:scaleType="fitXY"
+        android:src="@drawable/course_selector_tag"
+        android:id="@+id/CourseSelector">
+    </ImageView>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="6dp"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/courseSelectorSubject"
+            android:textSize="20sp"
+            android:textColor="@color/colorBlack"
+            android:text="@string/testDisplay"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/courseSelectorName"
+            android:textSize="15sp"
+            android:textColor="@color/colorGray"
+            android:text="@string/longTestDisplay"/>
+
+    </LinearLayout>
+
+</LinearLayout>
